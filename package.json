@@ -1,0 +1,47 @@
+{
+  "name": "sync-iconfont",
+  "version": "0.0.0-alpha.1",
+  "description": "A command line tool to convert SVG files to symbols.",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "bin": {
+    "sync-iconfont": "./bin/sync-iconfont"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node ./lib/index.js",
+    "format": "prettier --write .",
+    "lint": "eslint --ext .js,.ts,.tsx ./src",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@eslint/create-config": "^0.4.6",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "3.0.3",
+    "typescript": "5.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/john-yuan/sync-iconfont"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "svg",
+    "symbol"
+  ],
+  "license": "MIT"
+}
