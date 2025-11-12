@@ -47,7 +47,7 @@ typeName: IconFontName
 然后在 `.iconfont.yml` 同级目录下执行命令：
 
 ```sh
-sync-iconfont
+npx sync-iconfont
 ```
 
 ## API
