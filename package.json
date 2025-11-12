@@ -1,7 +1,10 @@
 {
   "name": "sync-iconfont",
   "version": "0.0.0-alpha.1",
-  "description": "A command line tool to convert SVG files to symbols.",
+  "description": "A command line tool to sync iconfont css and font files.",
+  "keywords": [
+    "iconfont"
+  ],
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
@@ -39,6 +42,5 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "keywords": ["iconfont"],
   "license": "MIT"
 }
