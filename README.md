@@ -1,5 +1,7 @@
 # README
 
+[![npm version](https://img.shields.io/npm/v/sync-iconfont.svg)](https://www.npmjs.com/package/sync-iconfont)
+
 本项目用于同步 iconfont CSS 文件和字体文件。
 
 功能：
@@ -7,6 +9,12 @@
 - 拉取最新 CSS 文件和字体文件到本地。
 - 自动替换 CSS 文件中 `@font-face` 的 `src` 路径。
 - 生成图标名称 TypeScript 类型。
+
+## 安装
+
+```sh
+npm i sync-iconfont --save-dev
+```
 
 ## 使用方式
 
@@ -36,7 +44,7 @@ typeOutputPath:
 typeName: IconFontName
 ```
 
-然后在 `.iconfont.yml` 所做目录下执行命令：
+然后在 `.iconfont.yml` 同级目录下执行命令：
 
 ```sh
 sync-iconfont
@@ -51,3 +59,7 @@ syncIconFont({
   cssUrl: '//at.alicdn.com/t/c/xxx.css'
 })
 ```
+
+## License
+
+[MIT](./LICENSE)
