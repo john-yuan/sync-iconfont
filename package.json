@@ -1,6 +1,6 @@
 {
   "name": "sync-iconfont",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A command line tool to sync iconfont css and font files.",
   "keywords": [
     "iconfont"
