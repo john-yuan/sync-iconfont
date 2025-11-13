@@ -43,6 +43,12 @@ export interface SyncIconFontOptions {
    * FontClass 前缀，如果指定了前缀，会在生成 TypeScript 类型时移除此前缀。
    */
   fontClassPrefix?: string
+
+  /**
+   * 如果设置为 false 则移除 font-size，如果设置为字符串如 `1em` 则
+   * 替换为对应值。如果不设置，则保留原有值。
+   */
+  fontSize?: string | boolean
 }
 
 export async function syncIconFont(options: SyncIconFontOptions) {
@@ -56,9 +62,15 @@ export async function syncIconFont(options: SyncIconFontOptions) {
 
   logger(`downloading ${url}`)
 
-  const css = await fetch(url).then((res) => res.text())
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error(`failed downloading ${url}. status: ${response.status}`)
+  }
 
   logger(`downloaded ${url}`)
+
+  const css = await response.text()
 
   const res = resolveIconFontCss(css)
   const outputDir = path.resolve(options.outputDir || 'iconfont')
@@ -86,7 +98,30 @@ export async function syncIconFont(options: SyncIconFontOptions) {
 
   const cssStart = css.slice(0, res.srcStartIndex)
   const cssEnd = css.slice(res.srcEndIndex)
-  const newCss = cssStart + 'src: ' + fontSrcList.join(',\n    ') + cssEnd
+
+  let newCss = cssStart + 'src: ' + fontSrcList.join(',\n    ') + cssEnd
+
+  const { fontSize } = options
+
+  if (fontSize === false) {
+    newCss = newCss.replace(/\n\s*font-size:[^;]+;\n/, '\n')
+    logger('removed font-size')
+  } else if (typeof fontSize === 'string' && fontSize) {
+    const startIndex = newCss.indexOf('font-size:')
+    const endIndex = newCss.indexOf(';', startIndex)
+
+    if (startIndex > -1) {
+      newCss =
+        newCss.slice(0, startIndex) +
+        `font-size: ${fontSize}` +
+        newCss.slice(endIndex)
+
+      logger(`replaced font-size to ${fontSize}`)
+    } else {
+      logger(`no font-size rule found`)
+    }
+  }
+
   const cssOutputPath = path.resolve(outputDir, filename + '.css')
 
   fs.writeFileSync(cssOutputPath, newCss)
