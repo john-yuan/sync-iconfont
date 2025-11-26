@@ -129,7 +129,7 @@ export async function syncIconFont(options: SyncIconFontOptions) {
   logger(`saved ` + path.relative(process.cwd(), cssOutputPath))
 
   const ts =
-    `export type ${options.typeName || 'IconFontName'} = ` +
+    `export type ${options.typeName || 'IconFontName'} =\n  | ` +
     res.iconClassNames
       .sort()
       .map((name) =>
