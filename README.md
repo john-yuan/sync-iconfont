@@ -24,6 +24,7 @@ npm i sync-iconfont --save-dev
 ```yml
 # IconFont css 文件地址
 cssUrl: //at.alicdn.com/t/c/xxx.css
+
 # FontClass 前缀
 # 如果指定了前缀，会在生成 TypeScript 类型时移除此前缀
 # fontClassPrefix:
