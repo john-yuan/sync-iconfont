@@ -49,6 +49,16 @@ export interface SyncIconFontOptions {
    * 替换为对应值。如果不设置，则保留原有值。
    */
   fontSize?: string | boolean
+
+  /**
+   * 指定一个路径用于保存图标名称
+   *
+   * 如果不指定则不生成此文件，如果路径中不包含目录，则保存在 `{outputDir}/`
+   * 目录下。
+   *
+   * 默认为空。
+   */
+  nameOutputPath?: string
 }
 
 export async function syncIconFont(options: SyncIconFontOptions) {
@@ -128,15 +138,17 @@ export async function syncIconFont(options: SyncIconFontOptions) {
 
   logger(`saved ` + path.relative(process.cwd(), cssOutputPath))
 
+  const names = res.iconClassNames
+    .map((name) =>
+      options.fontClassPrefix && name.startsWith(options.fontClassPrefix)
+        ? name.slice(options.fontClassPrefix.length)
+        : name
+    )
+    .sort()
+
   const ts =
     `export type ${options.typeName || 'IconFontName'} =\n  | ` +
-    res.iconClassNames
-      .sort()
-      .map((name) =>
-        options.fontClassPrefix && name.startsWith(options.fontClassPrefix)
-          ? name.slice(options.fontClassPrefix.length)
-          : name
-      )
+    names
       .map((name) => (name.includes(`'`) ? JSON.stringify(name) : `'${name}'`))
       .join('\n  | ') +
     '\n'
@@ -150,5 +162,16 @@ export async function syncIconFont(options: SyncIconFontOptions) {
     fs.writeFileSync(typeOutputPath, ts)
 
     logger(`saved ` + path.relative(process.cwd(), typeOutputPath))
+  }
+
+  if (options.nameOutputPath) {
+    const nameOutputPath = options.nameOutputPath.includes('/')
+      ? path.resolve(options.nameOutputPath)
+      : path.resolve(outputDir, options.nameOutputPath)
+
+    const ts = `export default ${JSON.stringify(names, null, 2)}\n`
+
+    fs.writeFileSync(nameOutputPath, ts)
+    logger(`saved ` + path.relative(process.cwd(), nameOutputPath))
   }
 }

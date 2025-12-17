@@ -24,7 +24,6 @@ npm i sync-iconfont --save-dev
 ```yml
 # IconFont css 文件地址
 cssUrl: //at.alicdn.com/t/c/xxx.css
-
 # FontClass 前缀
 # 如果指定了前缀，会在生成 TypeScript 类型时移除此前缀
 # fontClassPrefix:
@@ -49,6 +48,12 @@ cssUrl: //at.alicdn.com/t/c/xxx.css
 # 如果设置为字符串如 1em 则替换为对应值
 # 如果不设置，则保留原有值
 # fontSize:
+
+# 指定一个路径用于保存图标名称
+# 如果不指定则不生成此文件
+# 如果路径中不包含目录，则保存在 `{outputDir}/` 目录下
+# 默认为空
+# nameOutputPath: names.ts
 ```
 
 然后在 `.iconfont.yml` 同级目录下执行命令：
